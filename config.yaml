@@ -10,3 +10,6 @@ catch_rules:
               replace: ''
             - search: _
               replace: cyanfalse-mirror.onmicrosoft.cn/page/noVNC-1.3.0
+              action: fetch
+              fetch: 
+                  preflight: false
