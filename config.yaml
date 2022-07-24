@@ -9,4 +9,4 @@ catch_rules:
             - search: \?.* 
               replace: ''
             - search: _
-              replace: http://cyanfalse-mirror.onmicrosoft.cn/page/noVNC-1.3.0
+              replace: cyanfalse-mirror.onmicrosoft.cn/page/noVNC-1.3.0
