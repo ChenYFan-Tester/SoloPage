@@ -256,12 +256,7 @@
                     .then(text => {
                         if (text === 'ok') {
                             changeType('success');
-                            $$$('#info').innerHTML = 'ClientWorker已安装并配置完成，正在无刷新启动...';
-                            fetch(window.location.href).then(res => res.text()).then(text => {
-                                document.open()
-                                document.write(text);
-                                document.close();
-                            });
+                            window.location.reload()
                         } else {
                             $$$('#info').innerHTML = 'ClientWorker配置失败，可能还没有准备好，正在进行再次尝试...';
                             setTimeout(() => {
