@@ -238,7 +238,10 @@
                 location.reload();
             }, 3000);
         }, 5000);
-        navigator.serviceWorker.register('/cw.js?t=' + new Date().getTime()).then(async (registration) => {
+        navigator.serviceWorker.register('/cw.js?t=' + new Date().getTime(),{
+            scope: '/',
+            crential: 'include'
+        }).then(async (registration) => {
             let trycount = 0;
             changeType('ring')
             const conf = () => {
@@ -256,7 +259,12 @@
                     .then(text => {
                         if (text === 'ok') {
                             changeType('success');
-                            window.location.reload()
+                            $$$('#info').innerHTML = 'ClientWorker已安装并配置完成，正在无刷新启动...';
+                            fetch(window.location.href).then(res => res.text()).then(text => {
+                                document.open()
+                                document.write(text);
+                                document.close();
+                            });
                         } else {
                             $$$('#info').innerHTML = 'ClientWorker配置失败，可能还没有准备好，正在进行再次尝试...';
                             setTimeout(() => {

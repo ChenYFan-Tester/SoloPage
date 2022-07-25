@@ -1,15 +1,45 @@
-name: NoVnc
-cleaninterval: 1000*60*60*24*7
+name: BlogTest
 catch_rules: 
+    - rule: ^https\:\/\/rmt\.dogedoge\.com
+      transform_rules: 
+        - search: _
+          replace: https://rmt.ladydaily.com
+
+    - rule: ^https\:\/\/((cdn|fastly|gcore|test1|quantil)\.jsdelivr\.net\/npm|unpkg\.com|npm\.elemecdn\.com)
+      transform_rules:
+      - search: _
+        replace:
+          - _
+          - https://unpkg.com
+          - https://fastly.jsdelivr.net/npm
+          - https://unpkg.zhimg.com 
+          - https://npm.elemecdn.com 
+          - https://code.bdstatic.com/npm 
+          - https://npm.sourcegcdn.com 
+          - https://cdn.bilicdn.tk/npm 
+        action: fetch
+        fetch:
+          preflight: false
+          engine: parallel
+
     - rule: _ 
       transform_rules: 
             - search: \#.*
               searchin: url 
               replace: ''
             - search: \?.* 
-              replace: ''
-            - search: _
-              replace: cyanfalse-mirror.onmicrosoft.cn/page/noVNC-1.3.0
-              action: fetch
-              fetch: 
-                  preflight: false
+              replace: '' 
+            - search: ([^\/.]+)\/index(|\.html)$ 
+              action: redirect
+              redirect: 
+                to: $1/
+            - search: \/$
+              action: script
+              script:
+                name: list_post
+                skip: true
+            - search: \.md$
+              action: script
+              script:
+                name: show_post
+                skip: true
